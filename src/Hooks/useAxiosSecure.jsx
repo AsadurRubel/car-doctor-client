@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const axiosSecure = axios.create({
-    baseURL: 'https://car-doctor-server-beta-ebon.vercel.app/',
+    baseURL: 'https://car-doctor-server-beta-ebon.vercel.app',
     withCredentials: true
 })
 
