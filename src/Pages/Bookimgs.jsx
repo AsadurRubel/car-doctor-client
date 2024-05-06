@@ -1,43 +1,39 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
 import BookimgRow from "./BookimgRow";
-import axios from "axios";
+// import axios from "axios";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const Bookimgs = () => {
 
     const { user } = useContext(AuthContext)
-
     const [bookings, setBookings] = useState([]);
+    const axiosSecure = useAxiosSecure()
 
-    const url = `http://localhost:5000/bookings?email=${user?.email}`;
+    // const url = `https://car-doctor-server-beta-ebon.vercel.app/bookings?email=${user?.email}`;
+    const url = `/bookings?email=${user?.email}`;
 
     useEffect(() => {
-        axios.get(url, {withCredentials:true})
-        .then(res =>{
-            setBookings(res.data)
-        })
-
-
-
-        // fetch(url)
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         setBookings(data)
-        //     })
-    }, [url])
+        // axios.get(url, {withCredentials:true})
+        // .then(res =>{
+        //     setBookings(res.data)
+        // })
+        axiosSecure.get(url)
+        .then(res => setBookings(res.data))
+    }, [url, axiosSecure])
 
     
     const handleDelete = id =>{
         const procced = confirm('Are you sure you want to delete')
         if(procced){
-            fetch( `http://localhost:5000/bookings/${id}`,{
+            fetch( `https://car-doctor-server-beta-ebon.vercel.app/bookings/${id}`,{
                 method:'DELETE'
             })
             .then(res => res.json())
             .then(data=>{
-                console.log(data)
+                // console.log(data)
                 if(data.deletedCount > 0){
-                    alert('Deleted Successfull')
+                    alert('Deleted Successful')
                     const remaining = bookings.filter(booking => booking._id !== id)
                     setBookings(remaining)
                 }
@@ -46,7 +42,7 @@ const Bookimgs = () => {
     }
 
     const handleBookingConfirm = id =>{
-        fetch( `http://localhost:5000/bookings/${id}`,{
+        fetch( `https://car-doctor-server-beta-ebon.vercel.app/bookings/${id}`,{
             method:'PATCH',
             headers:{
                 'content-type': 'application/json'
@@ -55,7 +51,7 @@ const Bookimgs = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             if(data.modifiedCount > 0){
                 // Update State
             const remaining = bookings.filter(booking => booking._id !== id)

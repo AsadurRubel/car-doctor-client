@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const ServiceCard = ({ service }) => {
-    console.log(service)
+    // console.log(service)
     const {_id, title, img, price } = service
 
 

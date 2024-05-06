@@ -5,7 +5,7 @@ import { AuthContext } from "../Providers/AuthProvider";
 const CheckOut = () => {
 
     const service = useLoaderData();
-    console.log(service)
+    // console.log(service)
     const { title, _id, price, img } = service;
     const {user} = useContext(AuthContext)
 
@@ -25,8 +25,8 @@ const CheckOut = () => {
             service_id: _id,
             price: price
         }
-        console.log(booking)
-        fetch('http://localhost:5000/bookings',{
+        // console.log(booking)
+        fetch('https://car-doctor-server-beta-ebon.vercel.app/bookings',{
             method:'POST',
             headers:{
                 'content-type': 'application/json'
@@ -35,7 +35,7 @@ const CheckOut = () => {
         })
         .then(res => res.json())
         .then(data =>{
-            console.log(data)
+            // console.log(data)
             if(data.insertedId){
                 alert('Data Added Successfullt')
             }
